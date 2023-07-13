@@ -1,0 +1,54 @@
+{% include 'header.html' %}
+
+
+<!-- fOOD sEARCH Section Starts Here -->
+<section class="food-search text-center">
+    <div class="container">
+
+        <h2>Foods on Your Search <strong class="text-white">"{{search}}"</strong></h2>
+
+    </div>
+</section>
+<!-- fOOD sEARCH Section Ends Here -->
+
+
+<!-- fOOD MEnu Section Starts Here -->
+<section class="food-menu">
+    <div class="container">
+        {% if not foods %}
+        <h2 class="text-center">No Food Available in this Category.</h2>
+        {% else %}
+        <h2 class="text-center">Food Menu</h2>
+
+        {% for food in foods %}
+        {% if food.active == 'Yes' %}
+        <div class="food-menu-box">
+            <div class="food-menu-img">
+                <img src="static/images/{{food.image_name}}" alt="{{food.image_name}}" class="img-responsive img-curve">
+            </div>
+
+            <div class="food-menu-desc">
+                <h4>{{ food.title }}</h4>
+                <p class="food-price">₹ {{ food.price }}</p>
+                <p class="food-detail">
+                    {{ food.description }}
+                </p>
+                <br>
+
+                <a href="{{ url_for('order', id=food.id) }}" class="btn btn-primary">Order Now</a>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+
+
+        <div class="clearfix"></div>
+
+
+    </div>
+
+</section>
+<!-- fOOD Menu Section Ends Here -->
+{% include 'footer.html' %}

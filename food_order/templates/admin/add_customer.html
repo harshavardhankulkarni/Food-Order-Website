@@ -1,0 +1,45 @@
+{% include 'admin/header.html' %}
+
+<div class="main-content">
+    <div class="wrapper">
+        <h1>Add Customer</h1>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <label>
+            <input type="checkbox" class="alertCheckbox" autocomplete="off"/>
+            <div class="alert warning">
+                <span class="alertClose">X</span>
+                <span class="alertText">{{ message }}
+    <br class="clear"/></span>
+            </div>
+        </label>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+        <form action="{{ url_for('add_customer') }}" method="POST">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Full Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                       placeholder="Full Name" name="full_name" required>
+            </div>
+            <div class="form-group ">
+                <label for="exampleUserName1">Username</label>
+                <input type="text" class="form-control" id="exampleUserName1" aria-describedby="emailHelp"
+                       placeholder="Username" name="username" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password"
+                       placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary" name="submit">Add Customer</button>
+        </form>
+
+
+    </div>
+</div>
+
+{% include 'admin/footer.html' %}

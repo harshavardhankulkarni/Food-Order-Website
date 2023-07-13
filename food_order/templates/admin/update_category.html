@@ -1,0 +1,81 @@
+{% include 'admin/header.html' %}
+
+<div class="main-content">
+    <div class="wrapper">
+        <h1>Update Category</h1>
+
+        <br>
+
+        <form action="{{ url_for('update_category', id=category.id) }}" method="POST" enctype="multipart/form-data">
+
+            <div class="form-group mb-3">
+                <label for="exampleInputEmail1">Title</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                       name="title" placeholder="Category Title" value="{{category.title}}" required>
+            </div>
+            <div class="form-group mb-3">
+                <label class="mb-2">Current Image :</label>
+                {% if category.image_name %}
+                <img src="../../static/images/{{category.image_name}}" width="150px">
+                {% else %}
+                <div class='error'>Image Not Added.</div>
+                {% endif %}
+            </div>
+            <div class="form-group mb-3">
+                <label for="exampleFormControlFile1">Select Image</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
+            </div>
+            <label for="featured1" class="mb-2">Featured</label>
+            <br>
+            {% if category.featured == 'Yes' %}
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="Yes" id="featured1" checked>
+                <label class="form-check-label" for="featured1"> Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="No" id="featured2">
+                <label class="form-check-label" for="featured2">No</label>
+            </div>
+            {% else %}
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="Yes" id="featured1">
+                <label class="form-check-label" for="featured1"> Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="No" id="featured2" checked>
+                <label class="form-check-label" for="featured2">No</label>
+            </div>
+            {% endif %}
+            <br>
+            <label for="active1" class="mb-2">Active</label>
+            <br>
+            {% if category.active == 'Yes' %}
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="Yes" id="active1" checked>
+                <label class="form-check-label" for="active1"> Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="No" id="active2">
+                <label class="form-check-label" for="active2"> No</label>
+            </div>
+            {% else %}
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="Yes" id="active1">
+                <label class="form-check-label" for="active1"> Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="No" id="active2" checked>
+                <label class="form-check-label" for="active2"> No</label>
+            </div>
+            {% endif %}
+            <div>
+                <button type="submit" class="btn btn-primary" name="submit">Add Category</button>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+
+{% include 'admin/footer.html' %}

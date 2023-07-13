@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Important to make website responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Website</title>
+
+    <!-- Link our CSS file -->
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+<!-- Navbar Section Starts Here -->
+<section class="navbar">
+    <div class="container">
+        <div class="logo">
+            <a href="{{ url_for('index') }}" title="Logo">
+                <img src="static/images/logo.png" alt="Restaurant Logo" class="img-responsive">
+            </a>
+        </div>
+
+        <div class="menu text-right ">
+            <ul>
+                <li>
+                    <a href="{{ url_for('index') }}">Home</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('categories') }}">Categories</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('foods') }}">Foods</a>
+                </li>
+                {% if not current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('sign_up') }}">Sign Up</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('login') }}">Login</a>
+                </li>
+                {% else %}
+                <li>
+                    <div class="dropdown">
+                        <a class="dropbtn">{{ current_user.username }}</a>
+                        <div class="dropdown-content">
+                            <a href="{{ url_for('order_status') }}">Order Status</a>
+                            <a href="{{ url_for('logout_customer') }}">Logout</a>
+                        </div>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="clearfix"></div>
+
+    </div>
+</section>
+<!-- Navbar Section Ends Here -->

@@ -1,0 +1,77 @@
+{% include 'admin/header.html' %}
+
+<div class="main-content">
+    <div class="wrapper">
+        <h1>Update Order</h1>
+
+        <form action="{{ url_for('update_order', id=order.id) }}" method="POST">
+
+            <div class="form-group mb-3">
+                <label>Food Name : </label>
+                <label>{{ order.order.title }}</label>
+
+            </div>
+            <div class="form-group mb-3">
+                <label>Price : </label>
+                <label> $ {{ order.order.price }}</label>
+            </div>
+            <div class="form-group mb-3">
+                <label for="qty">Qty</label>
+                <input type="text" class="form-control" id="qty" aria-describedby="emailHelp"
+                       name="qty" value="{{ order.qty }}" required>
+            </div>
+            <label>Status</label>
+            <select class="form-select mb-3" aria-label="Default select example" name="status">
+                {% if order.status == 'Ordered' %}
+                <option value="Ordered" selected>Ordered</option>
+                <option value="On Delivery">On Delivery</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+                {% elif order.status == 'On Delivery' %}
+                <option value="Ordered">Ordered</option>
+                <option value="On Delivery" selected>On Delivery</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+                {% elif order.status == 'Delivered' %}
+                <option value="Ordered">Ordered</option>
+                <option value="On Delivery">On Delivery</option>
+                <option value="Delivered" selected>Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+                {% elif order.status == 'Cancelled' %}
+                <option value="Ordered">Ordered</option>
+                <option value="On Delivery">On Delivery</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled" selected>Cancelled</option>
+                {% endif %}
+            </select>
+            <div class="form-group mb-3">
+                <label for="customer_name">Customer Name</label>
+                <input type="text" class="form-control" id="customer_name" aria-describedby="emailHelp"
+                       name="customer_name" value="{{ order.customer_name }}" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="customer_contact">Customer Contact</label>
+                <input type="text" class="form-control" id="customer_contact" aria-describedby="emailHelp"
+                       name="customer_contact" value="{{order.customer_contact}}" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="customer_email">Customer Email</label>
+                <input type="text" class="form-control" id="customer_email" aria-describedby="emailHelp"
+                       name="customer_email" value="{{order.customer_email}}" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="exampleFormControlTextarea1">Customer Address</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1"
+                          name="customer_address" cols="30" rows="5">{{order.customer_address}}</textarea>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary mb-3" name="submit">Add Food</button>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+
+{% include 'admin/footer.html' %}

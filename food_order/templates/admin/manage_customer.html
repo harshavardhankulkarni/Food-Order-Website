@@ -1,0 +1,40 @@
+{% include 'admin/header.html' %}
+
+<!-- Main Content Section Starts -->
+<div class="main-content">
+    <div class="wrapper">
+        <h1>Manage Customer</h1>
+
+        <br/>
+
+        <!-- Button to Add Admin -->
+        <a href="{{ url_for('add_customer') }}" class="btn-primary">Add Customer</a>
+
+        <br/>
+        <br/>
+
+        <table class="tbl-full">
+            <tr>
+                <th>S.N.</th>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+
+                {% for customer in customers %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{customer.full_name}}</td>
+                <td>{{customer.username}}</td>
+                <td>
+                    <a href="{{ url_for('delete_customer', id=customer.id) }}" class="btn-danger">Delete Customer</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+</div>
+<!-- Main Content Section Ends -->
+{% include 'admin/footer.html' %}

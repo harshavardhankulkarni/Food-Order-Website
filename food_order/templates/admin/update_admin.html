@@ -1,0 +1,41 @@
+{% include 'admin/header.html' %}
+
+<div class="main-content">
+    <div class="wrapper">
+        <h1>Update Admin</h1>
+
+        <br><br>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <label>
+            <input type="checkbox" class="alertCheckbox" autocomplete="off"/>
+            <div class="alert warning">
+                <span class="alertClose">X</span>
+                <span class="alertText">{{ message }}
+    <br class="clear"/></span>
+            </div>
+        </label>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+        <form action="{{ url_for('update_admin', id=admin.id) }}" method="POST">
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Full Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="full_name"
+                       value="{{admin.full_name}}" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group mb-3">
+                <label for="exampleInputPassword1">Username</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" value="{{admin.username}}"
+                       name="username">
+            </div>
+            <button type="submit" class="btn btn-primary" name="submit">Update Admin</button>
+
+        </form>
+    </div>
+</div>
+<!-- Main Content Section Ends -->
+{% include 'admin/footer.html' %}

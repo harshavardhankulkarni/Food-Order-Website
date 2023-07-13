@@ -1,0 +1,72 @@
+{% include 'header.html' %}
+<!-- fOOD sEARCH Section Starts Here -->
+<section class="food-search">
+    <div class="container">
+
+        {% if not request.method == 'GET' %}
+        <h2 class="text-center text-white">Order Confirmed!</h2>
+        <div class="text-center text-white">
+            <a href="{{ url_for('order_status') }}">Order Status</a>
+        </div>
+        {% else %}
+        <h2 class="text-center text-white">Fill this form to confirm your order.</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <label>
+            <input type="checkbox" class="alertCheckbox" autocomplete="off"/>
+            <div class="alert warning">
+                <span class="alertClose">X</span>
+                <span class="alertText">{{ message }}
+    <br class="clear"/></span>
+            </div>
+        </label>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+        <form action="{{ url_for('order', id=food.id) }}" class="order" method="post">
+            <fieldset>
+                <legend>Selected Food</legend>
+
+                <div class="food-menu-img">
+                    <img src="static/images/{{food.image_name}}" alt="{{food.image_name}}"
+                         class="img-responsive img-curve">
+                </div>
+
+                <div class="food-menu-desc">
+                    <h3>{{food.title}}</h3>
+                    <p class="food-price">₹ {{food.price}}</p>
+
+                    <div class="order-label">Quantity</div>
+                    <input type="number" name="qty" class="input-responsive" value="1" required>
+
+                </div>
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Delivery Details</legend>
+
+                <div class="order-label">Phone Number</div>
+                <input type="tel" name="contact" placeholder="E.g. 9843xxxxxx" class="input-responsive" required>
+
+                <div class="order-label">Email</div>
+                <input type="email" name="email" placeholder="E.g. hi@harshkulkarni.com" class="input-responsive"
+                       required>
+
+                <div class="order-label">Address</div>
+                <textarea name="address" rows="10" placeholder="E.g. Street, City, Country" class="input-responsive"
+                          required></textarea>
+
+                <input type="submit" name="submit" value="Confirm Order" class="btn btn-primary">
+            </fieldset>
+
+        </form>
+        {% endif %}
+
+
+    </div>
+</section>
+<!-- fOOD sEARCH Section Ends Here -->
+{% include 'footer.html' %}

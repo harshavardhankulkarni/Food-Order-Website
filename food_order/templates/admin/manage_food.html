@@ -1,0 +1,58 @@
+{% include 'admin/header.html' %}
+
+
+<div class="main-content">
+    <div class="wrapper">
+        <h1>Manage Food</h1>
+
+        <br/><br/>
+
+        <!-- Button to Add Admin -->
+        <a href="{{ url_for('add_food') }}" class="btn-primary">Add Food</a>
+
+        <br/><br/><br/>
+
+
+        <table class="tbl-full">
+            <tr>
+                <th>S.N.</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Featured</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+            {% if foods %}
+            {% for food in foods %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{food.title}}</td>
+                <td>{{food.price}}</td>
+                <td>
+                    {% if food.image_name %}
+                    <img src="../../static/images/{{food.image_name}}" width="100px">
+                    {% else %}
+                    <div class='error'>Image not Added.</div>
+                    {% endif %}
+
+                </td>
+                <td>{{food.featured}}</td>
+                <td>{{food.active}}</td>
+                <td>
+                    <a href="{{ url_for('update_food', id=food.id) }}" class="btn-secondary">Update Food</a>
+                    <a href="{{ url_for('delete_food', id=food.id) }}" class="btn-danger">Delete Food</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan='7' class='error'> Food not Added Yet.</td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+
+</div>
+
+{% include 'admin/footer.html' %}

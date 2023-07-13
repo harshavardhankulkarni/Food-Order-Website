@@ -1,0 +1,25 @@
+{% include 'header.html' %}
+
+<!-- Categories Section Starts Here -->
+<section class="categories">
+    <div class="container">
+        <h2 class="text-center">Explore Foods</h2>
+
+        {% for category in categories %}
+        {% if category.active == 'Yes' %}
+        <a href="{{url_for('category_food', id=category.id)}}">
+            <div class="box-3 float-container">
+                <img src="static/images/{{category.image_name}}" alt="{{category.image_name}}" class="img-responsive img-curve">
+
+                <h3 class="float-text text-white">{{category.title}}</h3>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+
+        <div class="clearfix"></div>
+    </div>
+</section>
+<!-- Categories Section Ends Here -->
+
+{% include 'footer.html' %}

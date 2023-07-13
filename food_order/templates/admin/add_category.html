@@ -1,0 +1,65 @@
+{% include 'admin/header.html' %}
+
+<div class="main-content">
+    <div class="wrapper">
+        <h1>Add Category</h1>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <label>
+            <input type="checkbox" class="alertCheckbox" autocomplete="off"/>
+            <div class="alert warning">
+                <span class="alertClose">X</span>
+                <span class="alertText">{{ message }}
+    <br class="clear"/></span>
+            </div>
+        </label>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+
+        <!-- Add CAtegory Form Starts -->
+        <form action="{{ url_for('add_category') }}" method="POST" enctype="multipart/form-data">
+
+            <div class="form-group mb-3">
+                <label for="exampleInputEmail1">Title</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                       name="title" placeholder="Category Title" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="exampleFormControlFile1">Select Image</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
+            </div>
+            <label for="featured1" class="mb-2">Featured</label>
+            <br>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="Yes" id="featured1">
+                <label class="form-check-label" for="featured1" > Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="No" id="featured2">
+                <label class="form-check-label" for="featured2">No</label>
+            </div>
+            <br>
+            <label for="active1" class="mb-2">Active</label>
+            <br>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="Yes" id="active1">
+                <label class="form-check-label" for="active1"> Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="No" id="active2">
+                <label class="form-check-label" for="active2"> No</label>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary" name="submit">Add Category</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Add CAtegory Form Ends -->
+</div>
+
+{% include 'admin/footer.html' %}

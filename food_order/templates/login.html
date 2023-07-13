@@ -1,0 +1,90 @@
+{% include 'header.html' %}
+
+    <div class="wrapper">
+        <br>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <label>
+            <input type="checkbox" class="alertCheckbox" autocomplete="off"/>
+            <div class="alert warning">
+                <span class="alertClose">X</span>
+                <span class="alertText">{{ message }}
+    <br class="clear"/></span>
+            </div>
+        </label>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+        <div class="signupFrm" style="
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+">
+            <form action="{{ url_for('login') }}" class="form" method="post" style="
+        background-color: white;
+        width: 400px;
+        border-radius: 8px;
+        padding: 20px 40px;
+        box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
+        ">
+                <h1 class="title" style="
+        font-size: 50px;
+        margin-bottom: 50px;
+        ">Login</h1>
+                <div class="inputContainer" style="
+        position: relative;
+        height: 45px;
+        width: 90%;
+        margin-bottom: 17px;
+        ">
+                    <input type="text" class="input" style="
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: 100%;
+        border: 1px solid #DADCE0;
+        border-radius: 7px;
+        font-size: 16px;
+        padding: 0 20px;
+        outline: none;
+        background: none;
+        z-index: 1;
+        " placeholder="Username" name="username" id="username" required>
+                    <label for="username" class="label">Username</label>
+                </div>
+
+                <div class="inputContainer" style="
+        position: relative;
+        height: 45px;
+        width: 90%;
+        margin-bottom: 17px;
+        ">
+                    <input type="password" class="input" style="
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: 100%;
+        border: 1px solid #DADCE0;
+        border-radius: 7px;
+        font-size: 16px;
+        padding: 0 20px;
+        outline: none;
+        background: none;
+        z-index: 1;
+        " name="password" id="password" placeholder="Password" required>
+                    <label for="password" class="label">Password</label>
+                </div>
+
+                <input type="submit" class="submitBtn" value="Login">
+                <p> Don't have an Account? <a href="{{ url_for('sign_up') }}">Sign Up</a></p>
+            </form>
+        </div>
+
+</div>
+
+{% include 'footer.html' %}

@@ -1,0 +1,62 @@
+{% include 'admin/header.html' %}
+
+<div class="main-content">
+    <div class="wrapper">
+        <h1>Manage Category</h1>
+
+        <br>
+
+        <!-- Button to Add Admin -->
+        <a href="{{ url_for('add_category') }}" class="btn-primary">Add Category</a>
+
+        <br/><br>
+
+        <table class="tbl-full">
+            <tr>
+                <th>S.N.</th>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Featured</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+            {% if categories %}
+            {% for category in categories %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{ category.title}}</td>
+
+                <td>
+
+                    {% if category.image_name %}
+
+                    <img src="../../static/images/{{category.image_name}}" width="100px">
+                    {% else %}
+
+                    <div class='error'>Image not Added.</div>
+                    {% endif %}
+                </td>
+
+                <td>{{category.featured}}</td>
+                <td>{{category.active}}</td>
+                <td>
+                    <a href="{{ url_for('update_category', id=category.id) }}" class="btn-secondary">Update Category</a>
+                    <a href="{{ url_for('delete_category', id=category.id) }}" class="btn-danger">Delete Category</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+
+            <tr>
+                <td colspan="6">
+                    <div class="error">No Category Added.</div>
+                </td>
+            </tr>
+            {% endif %}
+
+        </table>
+    </div>
+
+</div>
+
+{% include 'admin/footer.html' %}

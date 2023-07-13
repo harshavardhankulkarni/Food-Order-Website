@@ -1,0 +1,119 @@
+{% include 'admin/header.html' %}
+
+<div class="main-content">
+    <div class="wrapper">
+        <h1>Update Food</h1>
+
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <label>
+            <input type="checkbox" class="alertCheckbox" autocomplete="off"/>
+            <div class="alert warning">
+                <span class="alertClose">X</span>
+                <span class="alertText">{{ message }}
+    <br class="clear"/></span>
+            </div>
+        </label>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <br>
+
+        <form action="{{ url_for('update_food', id=food.id) }}" method="POST" enctype="multipart/form-data">
+
+            <div class="form-group mb-3">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" aria-describedby="emailHelp"
+                       name="title" placeholder="Title of the Food" required value="{{food.title}}">
+            </div>
+            <div class="form-group mb-3">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" name="description" cols="30"
+                          rows="5"
+                          placeholder="Description of the Food.">{{food.description}}</textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label for="price">price</label>
+                <input type="text" class="form-control" id="price" aria-describedby="emailHelp"
+                       name="price" value="{{food.price}}" required>
+            </div>
+            <div class="form-group mb-3">
+                <label class="mb-2">Current Image :</label>
+                {% if food.image_name %}
+                <img src="../../static/images/{{food.image_name}}" width="150px">
+                {% else %}
+                <div class='error'>Image Not Added.</div>
+                {% endif %}
+            </div>
+            <div class="form-group mb-3">
+                <label for="exampleFormControlFile1">Select Image</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
+            </div>
+            <label>Food Category</label>
+            <select class="form-select mb-3" aria-label="Default select example" name="category">
+                {% if categories %}
+                {% for category in categories %}
+                {% if food.category_id == category.id %}
+                <option value="{{ category.id }}" selected>{{ category.title }}</option>
+                {% endif %}
+                <option value="{{ category.id }}">{{ category.title }}</option>
+                {% endfor %}
+                {% else %}
+                <option value="0">No Category Found</option>
+                {% endif %}
+            </select>
+            {% if food.featured == 'Yes' %}
+            <label for="featured1" class="mb-2">Featured</label>
+            <br>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="Yes" id="featured1" checked>
+                <label class="form-check-label" for="featured1"> Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="No" id="featured2">
+                <label class="form-check-label" for="featured2">No</label>
+            </div>
+            {% else %}
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="Yes" id="featured1">
+                <label class="form-check-label" for="featured1"> Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="featured" value="No" id="featured2" checked>
+                <label class="form-check-label" for="featured2">No</label>
+            </div>
+            {% endif %}
+            <br>
+            <label for="active1" class="mb-2">Active</label>
+            <br>
+            {% if food.active == 'Yes' %}
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="Yes" id="active1" checked>
+                <label class="form-check-label" for="active1"> Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="No" id="active2">
+                <label class="form-check-label" for="active2"> No</label>
+            </div>
+            {% else %}
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="Yes" id="active1">
+                <label class="form-check-label" for="active1"> Yes</label>
+            </div>
+            <div class="form-check form-check-inline mb-3">
+                <input type="radio" class="form-check-input" name="active" value="No" id="active2" checked>
+                <label class="form-check-label" for="active2"> No</label>
+            </div>
+            {% endif %}
+            <div>
+                <button type="submit" class="btn btn-primary mb-3" name="submit">Update Food</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% include 'admin/footer.html' %}
