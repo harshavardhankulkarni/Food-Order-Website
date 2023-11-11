@@ -10,7 +10,7 @@ from food_order import (
     db,
     Food,
     Category,
-    Admin,
+    User,
     Order,
     login_required_for_customer,
 )
@@ -119,7 +119,7 @@ def sign_up():
             try:
                 with app.app_context():
                     if request.form.get("password") == request.form.get("c-password"):
-                        new_customer = Admin(
+                        new_customer = User(
                             full_name=request.form.get("full_name"),
                             username=request.form.get("username"),
                             password=generate_password_hash(

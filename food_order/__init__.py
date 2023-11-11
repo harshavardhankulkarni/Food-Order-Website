@@ -26,15 +26,15 @@ def allowed_file(filename):
 
 # User Loader
 @login_manager.user_loader
-def load_user(admin_id):
-    return Admin.query.get(int(admin_id))
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-class Admin(db.Model, UserMixin):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), nullable=False, unique=True)
@@ -67,7 +67,7 @@ class Food(db.Model):
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     food_id = db.Column(db.Integer, db.ForeignKey("food.id"))
-    customer_id = db.Column(db.Integer, db.ForeignKey("admin.id"))
+    customer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     qty = db.Column(db.Integer, nullable=False)
     total = db.Column(db.Float, nullable=False)
     order_date = db.Column(db.String(20), nullable=False)

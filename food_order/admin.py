@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from food_order import app, db, Food, Category, Admin, Order, admin_only, super_admin
+from food_order import app, db, Food, Category, User, Order, admin_only, super_admin
 
 
 # ##################################### Admin Section #################################################################
@@ -15,7 +15,7 @@ def admin_index():
         all_order = db.session.query(Order).all()
         total = [o.total for o in all_order if o.status == "Delivered"]
         if request.method == "POST":
-            admin = Admin.query.filter_by(username=request.form.get("username")).first()
+            admin = User.query.filter_by(username=request.form.get("username")).first()
             if admin:
                 if check_password_hash(admin.password, request.form.get("password")):
                     if admin.role == "admin":
@@ -48,7 +48,7 @@ def manage_admin():
     with app.app_context():
         admins = [
             admin
-            for admin in Admin.query.order_by(Admin.id).all()
+            for admin in User.query.order_by(User.id).all()
             if admin.role == "admin"
         ]
         return render_template("admin/manage_admin.html", admins=admins)
@@ -63,7 +63,7 @@ def add_admin():
     if request.method == "POST":
         try:
             with app.app_context():
-                new_admin = Admin(
+                new_admin = User(
                     full_name=request.form.get("full_name"),
                     username=request.form.get("username"),
                     password=generate_password_hash(request.form.get("password"), salt_length=8),
@@ -86,7 +86,7 @@ def add_admin():
 def update_admin():
     with app.app_context():
         try:
-            admin = Admin.query.get(request.args.get("id"))
+            admin = User.query.get(request.args.get("id"))
             if request.method == "POST":
                 admin.full_name = request.form.get("full_name")
                 admin.username = request.form.get("username")
@@ -105,7 +105,7 @@ def update_admin():
 @super_admin
 def change_password():
     with app.app_context():
-        admin = Admin.query.get(request.args.get("id"))
+        admin = User.query.get(request.args.get("id"))
         if request.method == "POST":
             if check_password_hash(
                     admin.password, request.form.get("current_password")
@@ -133,7 +133,7 @@ def change_password():
 @admin_only
 def delete_admin():
     with app.app_context():
-        admin = Admin.query.get(request.args.get("id"))
+        admin = User.query.get(request.args.get("id"))
         db.session.delete(admin)
         db.session.commit()
         return redirect(url_for("manage_admin"))

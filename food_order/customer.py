@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from food_order import app, db, Admin, login_required_for_customer, admin_only
+from food_order import app, db, User, login_required_for_customer, admin_only
 
 
 # ############################## Manage Customers section Start #######################################################
@@ -15,7 +15,7 @@ def manage_customer():
     with app.app_context():
         customers = [
             customer
-            for customer in Admin.query.order_by(Admin.id).all()
+            for customer in User.query.order_by(User.id).all()
             if customer.role == "customer"
         ]
         return render_template("admin/manage_customer.html", customers=customers)
@@ -29,7 +29,7 @@ def add_customer():
     if request.method == "POST":
         try:
             with app.app_context():
-                new_customer = Admin(
+                new_customer = User(
                     full_name=request.form.get("full_name"),
                     username=request.form.get("username"),
                     password=generate_password_hash(request.form.get("password"), salt_length=8),
@@ -50,7 +50,7 @@ def add_customer():
 @admin_only
 def delete_customer():
     with app.app_context():
-        customer = Admin.query.get(request.args.get("id"))
+        customer = User.query.get(request.args.get("id"))
         db.session.delete(customer)
         db.session.commit()
         return redirect(url_for("manage_customer"))
@@ -60,7 +60,7 @@ def delete_customer():
 def login():
     if not current_user.is_authenticated:
         if request.method == "POST":
-            customer = Admin.query.filter_by(
+            customer = User.query.filter_by(
                 username=request.form.get("username")
             ).first()
             if customer:
