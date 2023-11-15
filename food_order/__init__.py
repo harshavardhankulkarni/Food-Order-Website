@@ -1,5 +1,7 @@
+import os
 from functools import wraps
 
+from dotenv import load_dotenv
 from flask import Flask, redirect, url_for, flash, abort
 from flask_login import LoginManager, UserMixin, current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -8,10 +10,13 @@ UPLOAD_FOLDER = "static/images/"
 ALLOWED_EXTENSIONS = {"webp", "png", "jpg", "jpeg", "gif"}
 
 app = Flask(__name__)
+
+load_dotenv()
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///food-order.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = "secret_key"
+app.config["SECRET_KEY"] = os.getenv('SECRET_KEY')
 
 # Create Database
 db = SQLAlchemy(app, session_options={"autoflush": False})
