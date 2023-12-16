@@ -44,7 +44,7 @@ def add_food():
                 file = request.files["image"]
                 if not file.filename == "":
                     if file and allowed_file(file.filename):
-                        if not os.path.isfile(f"static/images/{file.filename}"):
+                        if not os.path.isfile(f"food_order/static/images/{file.filename}"):
                             filename = secure_filename(file.filename)
                             file.save(
                                 os.path.join(app.config["UPLOAD_FOLDER"], filename)

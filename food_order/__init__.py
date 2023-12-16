@@ -6,7 +6,7 @@ from flask import Flask, redirect, url_for, flash, abort
 from flask_login import LoginManager, UserMixin, current_user
 from flask_sqlalchemy import SQLAlchemy
 
-UPLOAD_FOLDER = "static/images/"
+UPLOAD_FOLDER = "food_order/static/images/"
 ALLOWED_EXTENSIONS = {"webp", "png", "jpg", "jpeg", "gif"}
 
 app = Flask(__name__)
