@@ -27,7 +27,7 @@
                 <td>{{customer.full_name}}</td>
                 <td>{{customer.username}}</td>
                 <td>
-                    <a href="{{ url_for('delete_customer', id=customer.id) }}" class="btn-danger">Delete Customer</a>
+                    <a href="{{ url_for('delete_customer', id=customer.id) }}" onclick="return confirmations('Delete')" class="btn-danger">Delete Customer</a>
                 </td>
             </tr>
             {% endfor %}

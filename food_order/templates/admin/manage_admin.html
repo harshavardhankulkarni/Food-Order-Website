@@ -29,7 +29,7 @@
                 <td>
                     <a href="{{ url_for('change_password', id=admin.id) }}" class="btn-primary">Change Password</a>
                     <a href="{{ url_for('update_admin', id=admin.id) }}" class="btn-secondary">Update Admin</a>
-                    <a href="{{ url_for('delete_admin', id=admin.id) }}" class="btn-danger">Delete Admin</a>
+                    <a href="{{ url_for('delete_admin', id=admin.id) }}" onclick="return confirmations('Delete')" class="btn-danger">Delete Admin</a>
                 </td>
             </tr>
             {% endfor %}
