@@ -4,12 +4,15 @@ from functools import wraps
 from dotenv import load_dotenv
 from flask import Flask, redirect, url_for, flash, abort
 from flask_login import LoginManager, UserMixin, current_user
+from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 
 UPLOAD_FOLDER = "food_order/static/images/"
 ALLOWED_EXTENSIONS = {"webp", "png", "jpg", "jpeg", "gif"}
 
 app = Flask(__name__)
+
+api = Api(app)
 
 load_dotenv()
 
@@ -50,7 +53,7 @@ class User(db.Model, UserMixin):
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(100), nullable=False, unique=True)
     image_name = db.Column(db.String(255), nullable=True)
     featured = db.Column(db.String(10), nullable=False)
     active = db.Column(db.String(10), nullable=False)
@@ -59,7 +62,7 @@ class Category(db.Model):
 
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(100), nullable=False, unique=True)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
     image_name = db.Column(db.String(255), nullable=True)
     description = db.Column(db.Text, nullable=True)
@@ -129,4 +132,4 @@ def super_admin(f):
     return wrapper
 
 
-from food_order import admin, views, customer, category, food, order
+from food_order import admin, views, customer, category, food, order, rest_api
