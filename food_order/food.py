@@ -57,7 +57,7 @@ def add_food():
                 flash("Price Must be in decimal format")
                 return redirect(url_for("add_food"))
             except IntegrityError:
-                flash("Make sure you select all fields")
+                flash("Make sure you select all fields. or Food Title already taken.")
                 return redirect(url_for("add_food"))
         return render_template("admin/add_food.html", categories=all_category)
 

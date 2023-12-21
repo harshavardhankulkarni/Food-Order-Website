@@ -44,7 +44,7 @@ def add_category():
                             )
                 return redirect(url_for("manage_category"))
             except IntegrityError:
-                flash("You have to select featured and active status.")
+                flash("You have to select featured and active status. or Category Title already taken.")
                 return redirect(url_for("add_category"))
     return render_template("admin/add_category.html")
 
