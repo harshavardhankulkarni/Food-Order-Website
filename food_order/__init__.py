@@ -132,4 +132,4 @@ def super_admin(f):
     return wrapper
 
 
-from food_order import admin, views, customer, category, food, order, rest_api
+from food_order import admin, views, customer, category, food, order, category_api
