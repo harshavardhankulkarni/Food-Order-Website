@@ -1,4 +1,5 @@
 from flask_restful import Resource, fields, marshal_with, reqparse
+from sqlalchemy.exc import IntegrityError
 
 from food_order import api, db, Category, app
 
@@ -38,8 +39,9 @@ class CategoriesApi(Resource):
                 db.session.add(new_category)
                 db.session.commit()
                 db.session.refresh(new_category)
-            except Exception as e:
-                return {'message': e}, 400
+            except IntegrityError as e:
+                db.session.rollback()
+                return {'message': e.detail}, 400
             return new_category, 201
 
 
@@ -58,18 +60,22 @@ class CategoryApi(Resource):
         with (app.app_context()):
             category = Category.query.get(category_id)
             if category:
-                if args.get("title"):
-                    category.title = args.get("title")
-                if args.get("image"):
-                    category.image_name = args.get("image")
-                if args.get("featured"):
-                    category.featured = args.get("featured")
-                if args.get('active'):
-                    category.active = args.get("active")
-                db.session.add(category)
-                db.session.commit()
-                db.session.refresh(category)
-                return category, 200
+                try:
+                    if args.get("title"):
+                        category.title = args.get("title")
+                    if args.get("image"):
+                        category.image_name = args.get("image")
+                    if args.get("featured"):
+                        category.featured = args.get("featured")
+                    if args.get('active'):
+                        category.active = args.get("active")
+                    db.session.add(category)
+                    db.session.commit()
+                    db.session.refresh(category)
+                    return category, 200
+                except IntegrityError as e:
+                    db.session.rollback()
+                    return {'message': e.detail}, 400
             return category, 404
 
     @marshal_with(categories_field)
