@@ -3,6 +3,7 @@ from functools import wraps
 
 from dotenv import load_dotenv
 from flask import Flask, redirect, url_for, flash, abort
+from flask_cors import CORS
 from flask_login import LoginManager, UserMixin, current_user
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
@@ -13,6 +14,7 @@ ALLOWED_EXTENSIONS = {"webp", "png", "jpg", "jpeg", "gif"}
 app = Flask(__name__)
 
 api = Api(app)
+CORS(app)
 
 load_dotenv()
 
